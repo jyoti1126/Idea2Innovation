@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { User, Lock, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { signinApi } from '@/api/authApi';
+import { mockSigninApi } from '@/api/mockApi';
 import { useAuth } from '@/context/AuthContext';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 
@@ -24,7 +25,18 @@ const LoginPage = () => {
     }
     setLoading(true);
     try {
-      const { data } = await signinApi(form);
+      let data;
+      try {
+        const res = await signinApi(form);
+        data = res.data;
+      } catch (backendErr: any) {
+        if (!backendErr.response) {
+          const res = await mockSigninApi(form);
+          data = res.data;
+        } else {
+          throw backendErr;
+        }
+      }
       login({ user: data.user, accessToken: data.accessToken, refreshToken: data.refreshToken });
       navigate('/dashboard');
     } catch (err: any) {

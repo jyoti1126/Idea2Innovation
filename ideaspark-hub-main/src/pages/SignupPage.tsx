@@ -3,6 +3,7 @@ import { useNavigate, Navigate } from 'react-router-dom';
 import { User, Mail, AtSign, Lock, Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { signupApi } from '@/api/authApi';
+import { mockSignupApi } from '@/api/mockApi';
 import { useAuth } from '@/context/AuthContext';
 import { isValidEmail } from '@/utils/helpers';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
@@ -18,7 +19,7 @@ const SignupPage = () => {
     const p = form.password;
     if (p.length >= 8 && /\d/.test(p) && /[!@#$%^&*]/.test(p)) return 4;
     if (p.length >= 8 && /\d/.test(p)) return 3;
-    if (p.length >= 6) return 2;
+    if (p.length >= 8) return 2;
     if (p.length > 0) return 1;
     return 0;
   }, [form.password]);
@@ -35,14 +36,28 @@ const SignupPage = () => {
       return;
     }
     if (!isValidEmail(form.email)) { toast.error('Invalid email format'); return; }
-    if (form.password.length < 6) { toast.error('Password must be at least 6 characters'); return; }
+    if (form.password.length < 8) { toast.error('Password must be at least 8 characters'); return; }
     setLoading(true);
     try {
-      const { data } = await signupApi(form);
+      let data;
+      try {
+        // Try real backend first
+        const res = await signupApi(form);
+        data = res.data;
+      } catch (backendErr: any) {
+        // Fallback to mock if backend is unreachable (network error)
+        if (!backendErr.response) {
+          const res = await mockSignupApi(form);
+          data = res.data;
+        } else {
+          throw backendErr;
+        }
+      }
       login({ user: data.user, accessToken: data.accessToken, refreshToken: data.refreshToken });
+      toast.success('Account created successfully!');
       navigate('/dashboard');
     } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Signup failed');
+      toast.error(err.response?.data?.message || 'Signup failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -103,7 +118,7 @@ const SignupPage = () => {
               <label className="block font-body text-sm font-medium text-[#1E1B4B] mb-1">Password</label>
               <div className="relative">
                 <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#6B7280]" />
-                <input type={showPassword ? 'text' : 'password'} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Min 6 characters" className="w-full border border-[#EDE9FE] rounded-lg pl-10 pr-10 py-3 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand-subtle font-body" />
+                <input type={showPassword ? 'text' : 'password'} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Min 8 characters" className="w-full border border-[#EDE9FE] rounded-lg pl-10 pr-10 py-3 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand-subtle font-body" />
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6B7280]">
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>

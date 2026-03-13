@@ -16,7 +16,22 @@ const DashboardPage = () => {
 
   const fetchDashboard = async () => {
     try {
-      const res = isDemoMode() ? await mockGetDashboardApi() : await getDashboardApi();
+      let res;
+      if (isDemoMode()) {
+        res = await mockGetDashboardApi();
+      } else {
+        try {
+          res = await getDashboardApi();
+        } catch (backendErr: any) {
+          if (!backendErr.response) {
+            // Backend unreachable — switch to demo mode
+            localStorage.setItem('demoMode', 'true');
+            res = await mockGetDashboardApi();
+          } else {
+            throw backendErr;
+          }
+        }
+      }
       setData(res.data);
     } catch {
       toast.error('Failed to load dashboard');

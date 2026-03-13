@@ -16,6 +16,36 @@ const delay = (ms: number) => new Promise(r => setTimeout(r, ms));
 // Helper to check if demo mode
 export const isDemoMode = () => localStorage.getItem('demoMode') === 'true';
 
+// Auth
+export const mockSignupApi = async (data: { name: string; email: string; username: string; password: string }) => {
+  await delay(800);
+  const user = { name: data.name, email: data.email, username: data.username };
+  const accessToken = 'mock-access-token-' + Date.now();
+  const refreshToken = 'mock-refresh-token-' + Date.now();
+  // Store registered users list in localStorage
+  const users = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+  const exists = users.find((u: any) => u.username === data.username || u.email === data.email);
+  if (exists) throw { response: { data: { message: 'Username or email already exists' } } };
+  users.push({ ...data });
+  localStorage.setItem('mockUsers', JSON.stringify(users));
+  // Mark app as running in demo/offline mode so all pages use mock APIs
+  localStorage.setItem('demoMode', 'true');
+  return { data: { user, accessToken, refreshToken } };
+};
+
+export const mockSigninApi = async (data: { username: string; password: string }) => {
+  await delay(600);
+  const users = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+  const found = users.find((u: any) => u.username === data.username && u.password === data.password);
+  if (!found) throw { response: { data: { message: 'Invalid username or password' } } };
+  const user = { name: found.name, email: found.email, username: found.username };
+  const accessToken = 'mock-access-token-' + Date.now();
+  const refreshToken = 'mock-refresh-token-' + Date.now();
+  // Mark app as running in demo/offline mode so all pages use mock APIs
+  localStorage.setItem('demoMode', 'true');
+  return { data: { user, accessToken, refreshToken } };
+};
+
 // Dashboard
 export const mockGetDashboardApi = async () => {
   await delay(500);
