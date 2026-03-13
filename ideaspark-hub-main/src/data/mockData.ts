@@ -2,7 +2,7 @@
 
 export const mockUser = {
   name: 'Demo User',
-  email: 'demo@idea2impact.com',
+  email: 'demo@idea2execution.com',
   username: 'demouser',
 };
 

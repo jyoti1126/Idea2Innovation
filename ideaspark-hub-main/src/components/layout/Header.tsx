@@ -32,7 +32,7 @@ const Header = ({ onMobileToggle }: Props) => {
           <span className="text-lg mr-1">🚀</span>
           <span className="font-heading font-bold text-xl text-brand">IDEA</span>
           <span className="font-heading font-bold text-xl text-accent">2</span>
-          <span className="font-heading font-bold text-xl text-brand">IMPACT</span>
+          <span className="font-heading font-bold text-xl text-brand">EXECUTION</span>
         </div>
       </div>
 

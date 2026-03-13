@@ -98,7 +98,7 @@ const DashboardPage = () => {
       {/* Welcome banner */}
       {ideas.length === 0 && (
         <div className="bg-gradient-to-r from-brand-subtle to-accent-subtle rounded-2xl p-6 border border-[#EDE9FE]">
-          <p className="font-heading text-lg font-bold text-[#1E1B4B] mb-2">Welcome to IDEA2IMPACT! 🎉</p>
+          <p className="font-heading text-lg font-bold text-[#1E1B4B] mb-2">Welcome to Idea2Execution! 🎉</p>
           <p className="text-[#6B7280] font-body text-sm mb-4">Start by generating your first idea.</p>
           <button onClick={() => navigate('/idea-generator')} className="bg-gradient-to-r from-brand to-accent text-white rounded-lg px-5 py-2.5 font-body font-semibold hover:shadow-button transition-shadow">
             Go to Idea Generator

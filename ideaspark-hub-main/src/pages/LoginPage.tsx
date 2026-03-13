@@ -53,7 +53,7 @@ const LoginPage = () => {
         <div className="absolute top-[-80px] right-[-80px] w-[300px] h-[300px] rounded-full bg-white/10" />
         <div className="absolute bottom-[-120px] left-[-60px] w-[400px] h-[400px] rounded-full bg-white/5" />
         <div className="relative z-10 text-white max-w-md">
-          <h1 className="font-heading text-4xl font-bold mb-3">IDEA<span className="text-purple-200">2</span>IMPACT</h1>
+          <h1 className="font-heading text-4xl font-bold mb-3">IDEA<span className="text-purple-200">2</span>EXECUTION</h1>
           <p className="text-white/80 italic font-body text-lg mb-8">From Idea to Entrepreneurial Impact</p>
           <div className="space-y-4">
             {['AI-Powered Idea Validation', 'Step-by-Step Execution Roadmap', 'Curated Learning Resources'].map((t) => (
@@ -72,7 +72,7 @@ const LoginPage = () => {
           <div className="text-center mb-6 md:hidden">
             <span className="font-heading font-bold text-2xl text-brand">IDEA</span>
             <span className="font-heading font-bold text-2xl text-accent">2</span>
-            <span className="font-heading font-bold text-2xl text-brand">IMPACT</span>
+            <span className="font-heading font-bold text-2xl text-brand">EXECUTION</span>
           </div>
           <h2 className="font-heading text-2xl font-bold text-[#1E1B4B] mb-1">Welcome back!</h2>
           <p className="text-[#6B7280] font-body text-sm mb-6">Sign in to your account to continue</p>

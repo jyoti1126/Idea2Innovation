@@ -38,7 +38,7 @@ const Sidebar = ({ mobileOpen, onMobileClose }: Props) => {
         ))}
       </div>
       <div className="border-t border-[#EDE9FE] p-3">
-        <p className="text-[11px] text-[#6B7280] text-center font-body">v1.0 · IDEA2IMPACT</p>
+        <p className="text-[11px] text-[#6B7280] text-center font-body">v1.0 · IDEA2EXECUTION</p>
       </div>
     </nav>
   );
@@ -56,7 +56,7 @@ const Sidebar = ({ mobileOpen, onMobileClose }: Props) => {
           <div className="absolute inset-0 bg-black/40" onClick={onMobileClose} />
           <aside className="absolute left-0 top-0 w-[280px] h-full bg-card shadow-cardHover slide-in-right">
             <div className="flex items-center justify-between px-4 h-16 border-b border-[#EDE9FE]">
-              <span className="font-heading font-bold text-brand">IDEA<span className="text-accent">2</span>IMPACT</span>
+              <span className="font-heading font-bold text-brand">IDEA<span className="text-accent">2</span>EXECUTION</span>
               <button onClick={onMobileClose} className="text-[#6B7280]"><X size={20} /></button>
             </div>
             {sidebarContent}
