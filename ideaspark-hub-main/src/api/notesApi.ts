@@ -1,9 +1,11 @@
 import axiosInstance from './axiosInstance';
+import { isDemoMode, mockGetNotesApi, mockUpdateNoteApi, mockAddSectionApi } from './mockApi';
 
-export const getNotesApi = () => axiosInstance.get('/notes');
+export const getNotesApi = () =>
+  isDemoMode() ? mockGetNotesApi() : axiosInstance.get('/notes');
 
 export const updateNoteApi = (sectionId: string, content: string) =>
-  axiosInstance.patch(`/notes/${sectionId}`, { content });
+  isDemoMode() ? mockUpdateNoteApi() : axiosInstance.patch(`/notes/${sectionId}`, { content });
 
 export const addSectionApi = (sectionTitle: string) =>
-  axiosInstance.post('/notes/section', { sectionTitle });
+  isDemoMode() ? mockAddSectionApi(sectionTitle) : axiosInstance.post('/notes/section', { sectionTitle });

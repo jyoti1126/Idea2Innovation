@@ -33,6 +33,12 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // Auto-enable demo mode when backend is unreachable (network error, no response)
+    if (!error.response) {
+      localStorage.setItem('demoMode', 'true');
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.includes('/auth/refresh')) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {

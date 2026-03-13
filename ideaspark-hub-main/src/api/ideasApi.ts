@@ -1,4 +1,5 @@
 import axiosInstance from './axiosInstance';
+import { isDemoMode, mockGenerateIdeasApi, mockAcceptIdeaApi, mockGetMyIdeasApi, mockDeleteIdeaApi } from './mockApi';
 
 export const generateIdeasApi = (data: {
   skill: string;
@@ -6,7 +7,7 @@ export const generateIdeasApi = (data: {
   problem: string;
   budget: string;
   timeCommitment: string;
-}) => axiosInstance.post('/ideas/generate', data);
+}) => isDemoMode() ? mockGenerateIdeasApi() : axiosInstance.post('/ideas/generate', data);
 
 export const acceptIdeaApi = (data: {
   title: string;
@@ -16,8 +17,10 @@ export const acceptIdeaApi = (data: {
   feasibilityScore: number;
   marketPotential: string;
   competitionLevel: string;
-}) => axiosInstance.post('/ideas/accept', data);
+}) => isDemoMode() ? mockAcceptIdeaApi(data) : axiosInstance.post('/ideas/accept', data);
 
-export const getMyIdeasApi = () => axiosInstance.get('/ideas');
+export const getMyIdeasApi = () =>
+  isDemoMode() ? mockGetMyIdeasApi() : axiosInstance.get('/ideas');
 
-export const deleteIdeaApi = (id: string) => axiosInstance.delete(`/ideas/${id}`);
+export const deleteIdeaApi = (id: string) =>
+  isDemoMode() ? mockDeleteIdeaApi() : axiosInstance.delete(`/ideas/${id}`);

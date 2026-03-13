@@ -1,5 +1,8 @@
 import axiosInstance from './axiosInstance';
+import { isDemoMode, mockGetDashboardApi, mockGetActivityApi } from './mockApi';
 
-export const getDashboardApi = () => axiosInstance.get('/dashboard');
+export const getDashboardApi = () =>
+  isDemoMode() ? mockGetDashboardApi() : axiosInstance.get('/dashboard');
 
-export const getActivityApi = (ideaId: string) => axiosInstance.get(`/dashboard/activity/${ideaId}`);
+export const getActivityApi = (ideaId: string) =>
+  isDemoMode() ? mockGetActivityApi() : axiosInstance.get(`/dashboard/activity/${ideaId}`);
